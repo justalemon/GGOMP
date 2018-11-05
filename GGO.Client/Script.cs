@@ -11,6 +11,7 @@ namespace GGO.Client
         {
             Tick += OnTick;
             EventHandlers.Add("onClientMapStart", new Action(OnClientMapStart));
+            EventHandlers.Add("playerSpawned", new Action<Player, Vector3>(OnPlayerSpawned));
         }
 
         private async Task OnTick()
