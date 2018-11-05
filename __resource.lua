@@ -5,6 +5,6 @@ client_scripts {
 	"GGO.Shared.net.dll"
 }
 server_scripts {
-	"GGO.Server.net.dll"
+	"GGO.Server.net.dll",
 	"GGO.Shared.net.dll"
 }
