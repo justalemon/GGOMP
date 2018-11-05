@@ -1,5 +1,4 @@
 ﻿using CitizenFX.Core;
-using CitizenFX.Core.Native;
 using System;
 using System.Dynamic;
 using System.Threading.Tasks;
@@ -15,6 +14,7 @@ namespace GGO.Server
             EventHandlers.Add("playerDropped", new Action<string, Player>(OnPlayerDropped));
             EventHandlers.Add("onPlayerDied", new Action<Player, string, Vector3>(OnPlayerDied));
             EventHandlers.Add("onPlayerKilled", new Action<Player, Player, string, Vector3>(OnPlayerKilled));
+            EventHandlers.Add("playerSpawned", new Action<Player, Vector3>(OnPlayerSpawned));
         }
 
         private async Task OnTick()
@@ -42,7 +42,7 @@ namespace GGO.Server
 
         }
 
-        private void OnPlayerSpawned()
+        private void OnPlayerSpawned(Player Spawned, Vector3 Where)
         {
 
         }
