@@ -1,4 +1,4 @@
-﻿resource_type "gametype" { name = "GGO" }
+resource_type "gametype" { name = "GGO" }
 
 client_scripts {
 	"GGO.Client.net.dll",
