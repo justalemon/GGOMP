@@ -12,7 +12,6 @@ init:
 
 before_build:
   - ps: Invoke-WebRequest -useb "https://raw.githubusercontent.com/justalemon/FiveM-CI/master/fivem.ps1" | iex
-  - ps: nuget restore GGOMP.sln
 
 build_script:
   - ps: msbuild GGOMP.sln /t:Build /p:Configuration=Release /p:Platform="Any CPU"
