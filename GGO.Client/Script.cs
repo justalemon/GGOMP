@@ -19,6 +19,9 @@ namespace GGO.Client
             Tick += OnTick;
             EventHandlers.Add("onClientGameTypeStart", new Action(OnClientGameTypeStart));
             EventHandlers.Add("playerSpawned", new Action<ExpandoObject, Vector3>(OnPlayerSpawn));
+
+            API.SetDiscordAppId("509408274357944341");
+            API.SetDiscordRichPresenceAsset("ggo_white");
         }
 
         private async Task OnTick()
