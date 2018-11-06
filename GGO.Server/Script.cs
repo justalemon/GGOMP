@@ -1,4 +1,4 @@
-﻿using CitizenFX.Core;
+using CitizenFX.Core;
 using System;
 using System.Dynamic;
 using System.Threading.Tasks;
@@ -19,7 +19,8 @@ namespace GGO.Server
 
         private async Task OnTick()
         {
-            await Delay(100);
+            // Wait 1ms just in case
+            await Delay(1);
         }
 
         private void OnPlayerConnecting(string Name, CallbackDelegate SetReason, ExpandoObject TempPlayer)
