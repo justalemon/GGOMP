@@ -13,6 +13,10 @@ namespace GGO.Client
         /// Generator of random values.
         /// </summary>
         public static Random Generator = new Random();
+        /// <summary>
+        /// If the HUD should be disabled during the next frame.
+        /// </summary>
+        public static bool DisableHud = false;
 
         public ScriptClient()
         {
@@ -39,6 +43,11 @@ namespace GGO.Client
                 API.RemoveVehiclesFromGeneratorsInArea(PlayerPosition.X - 500, PlayerPosition.Y - 500, PlayerPosition.Z - 500, PlayerPosition.X + 500, PlayerPosition.Y + 500, PlayerPosition.Z + 500, 0);
                 API.SetGarbageTrucks(false);
                 API.SetRandomBoats(false);
+            }
+
+            if (DisableHud)
+            {
+                API.HideHudAndRadarThisFrame();
             }
 
             await Delay(1);
