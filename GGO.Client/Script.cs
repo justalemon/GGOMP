@@ -22,6 +22,7 @@ namespace GGO.Client
 
             API.SetDiscordAppId("509408274357944341");
             API.SetDiscordRichPresenceAsset("ggo_white");
+            API.SetRichPresence("Waiting for a Match on the HUB...");
         }
 
         private async Task OnTick()
