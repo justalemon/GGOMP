@@ -58,6 +58,7 @@ namespace GGO.Client
         {
             API.SetCloudHatOpacity(0);
 
+            API.DoScreenFadeOut(0);
             Location SpawnLocation = Data.HubSpawns[Generator.Next(Data.HubSpawns.Length)];
             Exports["spawnmanager"].spawnPlayer(new { x = SpawnLocation.X, y = SpawnLocation.Y, z = SpawnLocation.Z, heading = SpawnLocation.R, model = "mp_m_freemode_01" });
             Exports["spawnmanager"].forceRespawn();
@@ -72,7 +73,6 @@ namespace GGO.Client
             }
 
             API.ShutdownLoadingScreen();
-            API.DoScreenFadeOut(0);
             API.ShutdownLoadingScreenNui();
             API.DoScreenFadeIn(500);
         }
