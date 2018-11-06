@@ -61,10 +61,9 @@ namespace GGO.Client
             
             if (API.IsPlayerSwitchInProgress())
             {
-                API.ShowLoadingPrompt(1);
+                API.SwitchInPlayer(LocalPlayer.Character.GetHashCode());
+                API.RemoveLoadingPrompt();
             }
-
-            API.SwitchInPlayer(LocalPlayer.Character.GetHashCode());
         }
 
         private void SpawnPlayerCallback()
@@ -72,6 +71,7 @@ namespace GGO.Client
             if (!API.IsPlayerSwitchInProgress())
             {
                 API.SwitchOutPlayer(LocalPlayer.Character.GetHashCode(), 32, 1);
+                API.ShowLoadingPrompt(1);
             }
 
             Location SpawnLocation = Data.HubSpawns[Generator.Next(Data.HubSpawns.Length)];
