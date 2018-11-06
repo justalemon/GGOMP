@@ -28,5 +28,18 @@
             new Location(5319.6f, -5181, 83.5f, 90), new Location(5318.3f, -5184, 83.5f, 0),
             new Location(5313.3f, -5182.6f, 83.5f, 0), new Location(5303.3f, -5181.6f, 83.52f, 354.77f)
         };
+
+        /// <summary>
+        /// List of IPLs required to load and unload North Yankton.
+        /// </summary>
+        public static string[] NorthYanktonIPLs = new string[]
+        {
+            "prologue01", "prologue01c", "prologue01d", "prologue01e", "prologue01f",
+            "prologue01g", "prologue01h", "prologue01i", "prologue01j", "prologue01k",
+            "prologue01z", "prologue02", "prologue03", "prologue03b", "prologue04",
+            "prologue04b", "prologue05", "prologue05b", "prologue06", "prologue06b",
+            "prologue06_int", "prologuerd", "prologuerdb", "prologue_DistantLights",
+            "prologue_LODLights", "prologue_m2_door"
+        };
     }
 }

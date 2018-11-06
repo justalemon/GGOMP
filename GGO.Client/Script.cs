@@ -64,8 +64,11 @@ namespace GGO.Client
             // Enable the manual control of the FiveM loading screen
             API.SetManualShutdownLoadingScreenNui(true);
 
-            // Load the IPL for the bank from prologue
-            API.RequestIpl("prologue06_int");
+            // Load all of the IPLs from North Yankton to also see the map on the switch scene
+            foreach (string IPL in Data.NorthYanktonIPLs)
+            {
+                API.RequestIpl(IPL);
+            }
 
             // Disable the clouds on the switch screen
             API.SetCloudHatOpacity(0);
