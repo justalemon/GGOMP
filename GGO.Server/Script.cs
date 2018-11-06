@@ -1,4 +1,4 @@
-using CitizenFX.Core;
+﻿using CitizenFX.Core;
 using System;
 using System.Dynamic;
 using System.Threading.Tasks;
@@ -9,6 +9,7 @@ namespace GGO.Server
     {
         public ScriptServer()
         {
+            // Register our events, all of them
             Tick += OnTick;
             EventHandlers.Add("playerConnecting", new Action<string, CallbackDelegate, ExpandoObject>(OnPlayerConnecting));
             EventHandlers.Add("playerDropped", new Action<string, Player>(OnPlayerDropped));

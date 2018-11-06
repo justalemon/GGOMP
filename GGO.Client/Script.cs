@@ -21,17 +21,20 @@ namespace GGO.Client
 
         public ScriptClient()
         {
+            // Add our tick function8 and our events for when the client-side starts and when the player has spawned
             Tick += OnTick;
             EventHandlers.Add("onClientGameTypeStart", new Action(OnClientGameTypeStart));
             EventHandlers.Add("playerSpawned", new Action<ExpandoObject, Vector3>(OnPlayerSpawn));
 
+            // Set the Discord ID to "GGO for FiveM", use the white icon and add a message that the player is waiting
             API.SetDiscordAppId("509408274357944341");
-            API.SetDiscordRichPresenceAsset("ggo_white");
+            API.SetDiscordRichPresenceAsset("ggo_white"); // There is also ggo_black, but Elope said that white looks better
             API.SetRichPresence("Waiting for a Match on the HUB...");
         }
 
         private async Task OnTick()
         {
+            // Disable traffic and peds to make somewhat of a ghost town
             if (!Convert.ToBoolean(API.GetConvar("ggo_npcs", "false")))
             {
                 Vector3 PlayerPosition = LocalPlayer.Character.Position;
@@ -46,39 +49,53 @@ namespace GGO.Client
                 API.SetRandomBoats(false);
             }
 
+            // Disable the HUD if is required
             if (DisableHud)
             {
                 API.HideHudAndRadarThisFrame();
             }
 
+            // Wait 1ms just in case
             await Delay(1);
         }
 
         private void OnClientGameTypeStart()
         {
+            // Disable the clouds on the switch screen
             API.SetCloudHatOpacity(0);
 
+            // Do a Fade Out to avoid showing something ugly during the loading and spawn
             API.DoScreenFadeOut(0);
+
+            // Spawn the player at one of the random hub spawns
             Location SpawnLocation = Data.HubSpawns[Generator.Next(Data.HubSpawns.Length)];
             Exports["spawnmanager"].spawnPlayer(new { x = SpawnLocation.X, y = SpawnLocation.Y, z = SpawnLocation.Z, heading = SpawnLocation.R, model = "mp_m_freemode_01" });
             Exports["spawnmanager"].forceRespawn();
 
+            // Load the IPL for the bank from prologue
             API.RequestIpl("prologue06_int");
 
+            // Enable the manual control of the FiveM loading screen
             API.SetManualShutdownLoadingScreenNui(true);
 
+            // If there is not a player switch active
             if (!API.IsPlayerSwitchInProgress())
             {
+                // Switch out of the player location
                 API.SwitchOutPlayer(LocalPlayer.Character.GetHashCode(), 0, 1);
             }
 
+            // Close the loading screen for the game data (aka the FiveM loading screen)
             API.ShutdownLoadingScreen();
             API.ShutdownLoadingScreenNui();
+
+            // And return to the game window
             API.DoScreenFadeIn(500);
         }
 
         private void OnPlayerSpawn(ExpandoObject Spawned, Vector3 Where)
         {
+            // If the player is the GTA Online Male model, set some of the player visuals
             if (LocalPlayer.Character.Model == new Model("mp_m_freemode_01"))
             {
                 API.SetPedComponentVariation(LocalPlayer.Character.GetHashCode(), 0, 0, 0, 2);  // Face
@@ -88,6 +105,7 @@ namespace GGO.Client
                 API.SetPedComponentVariation(LocalPlayer.Character.GetHashCode(), 11, 7, 2, 2); // Jacket
             }
 
+            // And return to the player control
             API.SwitchInPlayer(LocalPlayer.Character.GetHashCode());
         }
     }
