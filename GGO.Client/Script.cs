@@ -46,11 +46,6 @@ namespace GGO.Client
             Exports["spawnmanager"].forceRespawn();
 
             API.RequestIpl("prologue06_int");
-
-            foreach (string IPL in Data.NorthYankton)
-            {
-                // API.RequestIpl(IPL);
-            }
         }
 
         private void OnPlayerSpawn(ExpandoObject Spawned, Vector3 Where)

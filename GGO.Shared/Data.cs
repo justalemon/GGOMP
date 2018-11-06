@@ -16,7 +16,7 @@
         };
 
         /// <summary>
-        /// The defined places to spawn the players on the hub.
+        /// The defined places to spawn the players on the hub (aka the North Yankton bank).
         /// </summary>
         public static Location[] HubSpawns = new Location[]
         {
