@@ -49,5 +49,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Script.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GGO.Shared\GGO.Shared.csproj">
+      <Project>{5ca88cd9-86da-471b-8234-83270cb91786}</Project>
+      <Name>GGO.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
