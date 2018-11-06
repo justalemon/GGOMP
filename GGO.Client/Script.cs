@@ -61,28 +61,23 @@ namespace GGO.Client
 
         private void OnClientGameTypeStart()
         {
+            // Enable the manual control of the FiveM loading screen
+            API.SetManualShutdownLoadingScreenNui(true);
+
+            // Load the IPL for the bank from prologue
+            API.RequestIpl("prologue06_int");
+
             // Disable the clouds on the switch screen
             API.SetCloudHatOpacity(0);
 
             // Do a Fade Out to avoid showing something ugly during the loading and spawn
             API.DoScreenFadeOut(0);
 
-            // Spawn the player at one of the random hub spawns
-            Location SpawnLocation = Data.HubSpawns[Generator.Next(Data.HubSpawns.Length)];
-            Exports["spawnmanager"].spawnPlayer(new { x = SpawnLocation.X, y = SpawnLocation.Y, z = SpawnLocation.Z, heading = SpawnLocation.R, model = "mp_m_freemode_01" });
-            Exports["spawnmanager"].forceRespawn();
-
-            // Load the IPL for the bank from prologue
-            API.RequestIpl("prologue06_int");
-
-            // Enable the manual control of the FiveM loading screen
-            API.SetManualShutdownLoadingScreenNui(true);
-
             // If there is not a player switch active
             if (!API.IsPlayerSwitchInProgress())
             {
                 // Switch out of the player location
-                API.SwitchOutPlayer(LocalPlayer.Character.GetHashCode(), 0, 1);
+                API.SwitchOutPlayer(LocalPlayer.Character.GetHashCode(), 0, 2);
             }
 
             // Close the loading screen for the game data (aka the FiveM loading screen)
@@ -91,6 +86,11 @@ namespace GGO.Client
 
             // And return to the game window
             API.DoScreenFadeIn(500);
+
+            // Spawn the player at one of the random hub spawns
+            Location SpawnLocation = Data.HubSpawns[Generator.Next(Data.HubSpawns.Length)];
+            Exports["spawnmanager"].spawnPlayer(new { x = SpawnLocation.X, y = SpawnLocation.Y, z = SpawnLocation.Z, heading = SpawnLocation.R, model = "mp_m_freemode_01" });
+            Exports["spawnmanager"].forceRespawn();
         }
 
         private void OnPlayerSpawn(ExpandoObject Spawned, Vector3 Where)
