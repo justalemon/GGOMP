@@ -1,5 +1,6 @@
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using CitizenFX.Core.UI;
 using GGO.Shared;
 using System;
 using System.Dynamic;
@@ -55,10 +56,25 @@ namespace GGO.Client
 
         private void OnClientGameTypeStart()
         {
-            Exports["spawnmanager"].setAutoSpawnCallback(new Action(SpawnPlayerCallback));
+            API.SetCloudHatOpacity(0);
+
+            Location SpawnLocation = Data.HubSpawns[Generator.Next(Data.HubSpawns.Length)];
+            Exports["spawnmanager"].spawnPlayer(new { x = SpawnLocation.X, y = SpawnLocation.Y, z = SpawnLocation.Z, heading = SpawnLocation.R, model = "mp_m_freemode_01" });
             Exports["spawnmanager"].forceRespawn();
 
             API.RequestIpl("prologue06_int");
+
+            API.SetManualShutdownLoadingScreenNui(true);
+
+            if (!API.IsPlayerSwitchInProgress())
+            {
+                API.SwitchOutPlayer(LocalPlayer.Character.GetHashCode(), 0, 1);
+            }
+
+            API.ShutdownLoadingScreen();
+            API.DoScreenFadeOut(0);
+            API.ShutdownLoadingScreenNui();
+            API.DoScreenFadeIn(500);
         }
 
         private void OnPlayerSpawn(ExpandoObject Spawned, Vector3 Where)
@@ -71,24 +87,8 @@ namespace GGO.Client
                 API.SetPedComponentVariation(LocalPlayer.Character.GetHashCode(), 6, 1, 0, 2);  // Shoes
                 API.SetPedComponentVariation(LocalPlayer.Character.GetHashCode(), 11, 7, 2, 2); // Jacket
             }
-            
-            if (API.IsPlayerSwitchInProgress())
-            {
-                API.SwitchInPlayer(LocalPlayer.Character.GetHashCode());
-                API.RemoveLoadingPrompt();
-            }
-        }
 
-        private void SpawnPlayerCallback()
-        {
-            if (!API.IsPlayerSwitchInProgress())
-            {
-                API.SwitchOutPlayer(LocalPlayer.Character.GetHashCode(), 32, 1);
-                API.ShowLoadingPrompt(1);
-            }
-
-            Location SpawnLocation = Data.HubSpawns[Generator.Next(Data.HubSpawns.Length)];
-            Exports["spawnmanager"].spawnPlayer(new { x = SpawnLocation.X, y = SpawnLocation.Y, z = SpawnLocation.Z, heading = SpawnLocation.R, model = "mp_m_freemode_01" });
+            API.SwitchInPlayer(LocalPlayer.Character.GetHashCode());
         }
     }
 }
