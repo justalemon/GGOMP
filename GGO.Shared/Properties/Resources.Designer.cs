@@ -61,11 +61,29 @@ namespace GGO.Shared.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are enough players to start a game.~n~Starting the match in {0} minute(s)..
+        /// </summary>
+        public static string MatchEnoughPlayers {
+            get {
+                return ResourceManager.GetString("MatchEnoughPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to We need {0} more players to start a game.~n~Checking again in {1} more minute(s)..
         /// </summary>
         public static string MatchNotEnoughPlayers {
             get {
                 return ResourceManager.GetString("MatchNotEnoughPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are enough players.~n~Starting the game....
+        /// </summary>
+        public static string MatchStartingUp {
+            get {
+                return ResourceManager.GetString("MatchStartingUp", resourceCulture);
             }
         }
     }
