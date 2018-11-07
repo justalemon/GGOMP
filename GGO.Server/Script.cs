@@ -1,5 +1,6 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using GGO.Shared.Properties;
 using System;
 using System.Dynamic;
 using System.Threading.Tasks;
@@ -16,19 +17,26 @@ namespace GGO.Server
 
         private async Task OnTickCheckStart()
         {
-            // Store our current players
+            // Store our wait time
+            int WaitTime = API.GetConvarInt("ggo_gamestart", 1);
+
+            // Create a list of players and store the player count
             PlayerList Players = new PlayerList();
+            int PlayerCount = API.GetNumPlayerIndices();
 
             // Check that the number of players is correct
-            if (API.GetNumPlayerIndices() <= 3)
+            if (PlayerCount <= 3)
             {
+                // Store the line that says what is going on
+                string CheckLine = string.Format(Resources.MatchNotEnoughPlayers, 3 - PlayerCount, API.GetConvarInt("ggo_gamestart", 1));
+
                 // Write a note into the server console
-                Debug.WriteLine("Not enough players to start a match. Player Count is " + API.GetNumPlayerIndices().ToString());
+                Debug.WriteLine(CheckLine.Replace("~n~", " "));
 
                 // And notify all of the players
                 foreach (Player NotifyTo in new PlayerList())
                 {
-                    TriggerClientEvent(NotifyTo, "onMatchStart", false, "There are not enough players to start the match.~n~Checking again in " + API.GetConvarInt("ggo_gamestart", 1) + " more minute(s).");
+                    TriggerClientEvent(NotifyTo, "onMatchStart", false, CheckLine);
                 }
             }
 
