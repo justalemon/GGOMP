@@ -1,4 +1,4 @@
-﻿using CitizenFX.Core.Native;
+using CitizenFX.Core.Native;
 
 namespace GGO.Client
 {
@@ -8,7 +8,7 @@ namespace GGO.Client
         {
             API.SetNotificationTextEntry("STRING");
             API.AddTextComponentString(Message);
-            API.SetNotificationMessage("CHAR_LESTER", "CHAR_LESTER", false, 1, "Server", "");
+            API.SetNotificationMessage(Contact, Contact, false, 1, Author, "");
             API.DrawNotification(false, true);
         }
     }
