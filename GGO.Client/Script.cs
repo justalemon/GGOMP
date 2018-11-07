@@ -1,6 +1,5 @@
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
-using CitizenFX.Core.UI;
 using GGO.Shared;
 using System;
 using System.Dynamic;
