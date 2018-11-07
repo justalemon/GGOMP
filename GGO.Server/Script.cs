@@ -28,12 +28,12 @@ namespace GGO.Server
                 // And notify all of the players
                 foreach (Player NotifyTo in new PlayerList())
                 {
-                    TriggerClientEvent(NotifyTo, "onMatchStart", false, "There are not enough players to start the match.~n~Trying again in one more minute.");
+                    TriggerClientEvent(NotifyTo, "onMatchStart", false, "There are not enough players to start the match.~n~Checking again in " + API.GetConvarInt("ggo_gamestart", 1) + " more minute(s).");
                 }
             }
 
-            // Try again in one minute
-            await Delay(60000);
+            // Try again in the specified number of minutes (default: 1)
+            await Delay(API.GetConvarInt("ggo_gamestart", 1) * 60 * 1000);
         }
     }
 }
