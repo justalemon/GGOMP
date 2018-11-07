@@ -111,5 +111,17 @@ namespace GGO.Client
             // And return to the player control
             API.SwitchInPlayer(LocalPlayer.Character.GetHashCode());
         }
+
+        private void OnMatchStart(bool Started, string Reason)
+        {
+            // If the match has not started, show a noficiation
+            if (!Started)
+            {
+                API.SetNotificationTextEntry("STRING");
+                API.AddTextComponentString(Reason);
+                API.SetNotificationMessage("CHAR_LESTER", "CHAR_LESTER", false, 1, "Server", "");
+                API.DrawNotification(false, true);
+            }
+        }
     }
 }
