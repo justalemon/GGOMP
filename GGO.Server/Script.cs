@@ -33,7 +33,7 @@ namespace GGO.Server
                 // And notify all of the players
                 foreach (Player NotifyTo in new PlayerList())
                 {
-                    TriggerClientEvent(NotifyTo, "onMatchStart", false, "There are not enough players to start the match. Trying again in one more minute.");
+                    TriggerClientEvent(NotifyTo, "onMatchStart", false, "There are not enough players to start the match.~n~Trying again in one more minute.");
                 }
             }
 
