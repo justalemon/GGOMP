@@ -122,7 +122,7 @@ namespace GGO.Client
             // If the match has not started, show a noficiation
             if (!Started)
             {
-                Messages.Phone("CHAR_LESTER", Reason);
+                Messages.Phone("CHAR_FRANK_TREV_CONF", Reason);
             }
         }
 

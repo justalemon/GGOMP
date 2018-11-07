@@ -49,10 +49,12 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy $(SolutionDir)__resource.lua $(TargetDir)
+(robocopy $(SolutionDir)stream $(TargetDir)stream) ^&amp; if %25errorlevel%25 leq 1 exit 0
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>rm $(TargetDir)__resource.lua || ver&gt;nul
+rmdir /S /Q $(TargetDir)stream
 </PreBuildEvent>
   </PropertyGroup>
 </Project>
