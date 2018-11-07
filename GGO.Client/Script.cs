@@ -25,6 +25,7 @@ namespace GGO.Client
             Tick += OnTick;
             EventHandlers.Add("onClientGameTypeStart", new Action(OnClientGameTypeStart));
             EventHandlers.Add("playerSpawned", new Action<ExpandoObject, Vector3>(OnPlayerSpawn));
+            EventHandlers.Add("onMatchStart", new Action<bool, string>(OnMatchStart));
 
             // Set the Discord ID to "GGO for FiveM", use the white icon and add a message that the player is waiting
             API.SetDiscordAppId("509408274357944341");
