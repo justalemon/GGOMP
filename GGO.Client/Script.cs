@@ -17,6 +17,10 @@ namespace GGO.Client
         /// If the HUD should be disabled during the next frame.
         /// </summary>
         public static bool DisableHud = false;
+        /// <summary>
+        /// If the Local Player is on a match.
+        /// </summary>
+        public static bool OnMatch = false;
 
         public ScriptClient()
         {
@@ -25,6 +29,7 @@ namespace GGO.Client
             EventHandlers.Add("onClientGameTypeStart", new Action(OnClientGameTypeStart));
             EventHandlers.Add("playerSpawned", new Action<ExpandoObject, Vector3>(OnPlayerSpawn));
             EventHandlers.Add("onMatchStart", new Action<bool, string>(OnMatchStart));
+            EventHandlers.Add("onPlayerMatchStart", new Action<Player, Vector3, float>(OnPlayerMatchStart));
 
             // Set the Discord ID to "GGO for FiveM", use the white icon and add a message that the player is waiting
             API.SetDiscordAppId("509408274357944341");
@@ -121,6 +126,31 @@ namespace GGO.Client
                 API.AddTextComponentString(Reason);
                 API.SetNotificationMessage("CHAR_LESTER", "CHAR_LESTER", false, 1, "Server", "");
                 API.DrawNotification(false, true);
+            }
+        }
+
+        private void OnPlayerMatchStart(Player Spawned, Vector3 Location, float Heading)
+        {
+            // Return if the player does not match
+            if (Spawned != LocalPlayer)
+            {
+                return;
+            }
+
+            // Switch out of the player location/the hub
+            API.SwitchOutPlayer(LocalPlayer.Character.GetHashCode(), 0, 2);
+
+            // Respawn the player on the new location
+            Exports["spawnmanager"].spawnPlayer(new { x = Location.X, y = Location.Y, z = Location.Z, heading = Heading, model = "mp_m_freemode_01" });
+            Exports["spawnmanager"].forceRespawn();
+
+            // Enable the check to show that the player is on a match
+            OnMatch = true;
+
+            // Finally, unload North Yankton
+            foreach (string IPL in Data.NorthYanktonIPLs)
+            {
+                API.RemoveIpl(IPL);
             }
         }
     }
