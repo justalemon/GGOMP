@@ -61,7 +61,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy $(SolutionDir)__resource.lua $(TargetDir)
-(robocopy $(SolutionDir)stream $(TargetDir)stream) ^&amp; if %25errorlevel%25 leq 1 exit 0
+(robocopy /NFL /NDL /NJH /NJS /NP $(SolutionDir)stream $(TargetDir)stream) ^&amp; if %25errorlevel%25 leq 1 exit 0
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
