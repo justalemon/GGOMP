@@ -1,0 +1,3 @@
+[submodule "NativeUI"]
+	path = NativeUI
+	url = https://github.com/justalemon/NativeUI
