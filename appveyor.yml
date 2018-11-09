@@ -10,6 +10,9 @@ assembly_info:
 init:
   - ps: if ($env:APPVEYOR_REPO_TAG -eq "true") { Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_TAG_NAME.TrimStart("v"))" }
 
+install:
+  - ps: git submodule update --init --recursive
+
 before_build:
   - ps: Invoke-WebRequest -useb "https://raw.githubusercontent.com/justalemon/FiveM-CI/master/fivem.ps1" | iex
 
