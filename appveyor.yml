@@ -12,7 +12,7 @@ init:
 
 install:
   - git submodule update --init --recursive
-  - nuget restore
+  - nuget restore && nuget restore -OutputDirectory NativeUI/packages
 
 build_script:
   - ps: msbuild GGOMP.sln /t:Build /p:Configuration=Release /p:Platform="Any CPU"
