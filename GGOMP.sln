@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGO.Server", "GGO.Server\GG
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGO.Shared", "GGO.Shared\GGO.Shared.csproj", "{5CA88CD9-86DA-471B-8234-83270CB91786}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeUI", "NativeUI\NativeUI.csproj", "{F3E16ED9-DBF7-4E7B-B04B-9B24B11891D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5CA88CD9-86DA-471B-8234-83270CB91786}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CA88CD9-86DA-471B-8234-83270CB91786}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CA88CD9-86DA-471B-8234-83270CB91786}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3E16ED9-DBF7-4E7B-B04B-9B24B11891D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3E16ED9-DBF7-4E7B-B04B-9B24B11891D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3E16ED9-DBF7-4E7B-B04B-9B24B11891D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3E16ED9-DBF7-4E7B-B04B-9B24B11891D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
