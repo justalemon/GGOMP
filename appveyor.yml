@@ -12,9 +12,7 @@ init:
 
 install:
   - git submodule update --init --recursive
-
-before_build:
-  - ps: Invoke-WebRequest -useb "https://raw.githubusercontent.com/justalemon/FiveM-CI/master/fivem.ps1" | iex
+  - nuget restore
 
 build_script:
   - ps: msbuild GGOMP.sln /t:Build /p:Configuration=Release /p:Platform="Any CPU"
