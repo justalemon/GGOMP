@@ -1,5 +1,6 @@
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using GGO.Client.Menus;
 using GGO.Shared;
 using System;
 using System.Dynamic;
@@ -25,16 +26,33 @@ namespace GGO.Client
         public ScriptClient()
         {
             // Add our tick function8 and our events for when the client-side starts and when the player has spawned
+            Tick += OnTickMenu;
             Tick += OnTick;
             EventHandlers.Add("onClientGameTypeStart", new Action(OnClientGameTypeStart));
             EventHandlers.Add("playerSpawned", new Action<ExpandoObject, Vector3>(OnPlayerSpawn));
             EventHandlers.Add("onMatchStart", new Action<bool, string>(OnMatchStart));
             EventHandlers.Add("onPlayerMatchStart", new Action<Player, Vector3, float>(OnPlayerMatchStart));
 
+            // Set up our menus
+            Main.SetUp();
+            Main.Pool.RefreshIndex();
+
             // Set the Discord ID to "GGO for FiveM", use the white icon and add a message that the player is waiting
             API.SetDiscordAppId("509408274357944341");
             API.SetDiscordRichPresenceAsset("ggo_white"); // There is also ggo_black, but Elope said that white looks better
             API.SetRichPresence("Waiting for a Match on the HUB...");
+        }
+
+        private async Task OnTickMenu()
+        {
+            // Process our NativeUI menus
+            Main.Pool.ProcessMenus();
+
+            // Open our menu if the Z key is pressed
+            if (Game.IsControlJustReleased(1, Control.CharacterWheel))
+            {
+                Main.Menu.Visible = !Main.Menu.Visible;
+            }
         }
 
         private async Task OnTick()
@@ -61,7 +79,7 @@ namespace GGO.Client
             }
 
             // Wait 1ms just in case
-            await Delay(1);
+            await Delay(0);
         }
 
         private void OnClientGameTypeStart()
