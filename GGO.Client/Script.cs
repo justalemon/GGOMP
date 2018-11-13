@@ -27,7 +27,8 @@ namespace GGO.Client
         {
             // Add our tick function8 and our events for when the client-side starts and when the player has spawned
             Tick += OnTickMenu;
-            Tick += OnTick;
+            Tick += OnTickHud;
+            Tick += OnTickDisableNPCs;
             EventHandlers.Add("onClientGameTypeStart", new Action(OnClientGameTypeStart));
             EventHandlers.Add("playerSpawned", new Action<ExpandoObject, Vector3>(OnPlayerSpawn));
             EventHandlers.Add("onMatchStart", new Action<bool, string>(OnMatchStart));
@@ -55,7 +56,16 @@ namespace GGO.Client
             }
         }
 
-        private async Task OnTick()
+        private async Task OnTickHud()
+        {
+            // Disable the HUD if is required
+            if (DisableHud)
+            {
+                API.HideHudAndRadarThisFrame();
+            }
+        }
+
+        private async Task OnTickDisableNPCs()
         {
             // Disable traffic and peds to make somewhat of a ghost town
             Vector3 PlayerPosition = LocalPlayer.Character.Position;
@@ -67,15 +77,6 @@ namespace GGO.Client
             API.RemoveVehiclesFromGeneratorsInArea(PlayerPosition.X - 500, PlayerPosition.Y - 500, PlayerPosition.Z - 500, PlayerPosition.X + 500, PlayerPosition.Y + 500, PlayerPosition.Z + 500, 0);
             API.SetGarbageTrucks(false);
             API.SetRandomBoats(false);
-
-            // Disable the HUD if is required
-            if (DisableHud)
-            {
-                API.HideHudAndRadarThisFrame();
-            }
-
-            // Wait 1ms just in case
-            await Delay(0);
         }
 
         private void OnClientGameTypeStart()
