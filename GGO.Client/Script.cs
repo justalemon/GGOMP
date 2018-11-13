@@ -58,19 +58,15 @@ namespace GGO.Client
         private async Task OnTick()
         {
             // Disable traffic and peds to make somewhat of a ghost town
-            if (!Convert.ToBoolean(API.GetConvar("ggo_npcs", "false")))
-            {
-                Vector3 PlayerPosition = LocalPlayer.Character.Position;
-
-                API.SetVehicleDensityMultiplierThisFrame(0);
-                API.SetPedDensityMultiplierThisFrame(0);
-                API.SetRandomVehicleDensityMultiplierThisFrame(0);
-                API.SetParkedVehicleDensityMultiplierThisFrame(0);
-                API.SetScenarioPedDensityMultiplierThisFrame(0, 0);
-                API.RemoveVehiclesFromGeneratorsInArea(PlayerPosition.X - 500, PlayerPosition.Y - 500, PlayerPosition.Z - 500, PlayerPosition.X + 500, PlayerPosition.Y + 500, PlayerPosition.Z + 500, 0);
-                API.SetGarbageTrucks(false);
-                API.SetRandomBoats(false);
-            }
+            Vector3 PlayerPosition = LocalPlayer.Character.Position;
+            API.SetVehicleDensityMultiplierThisFrame(0);
+            API.SetPedDensityMultiplierThisFrame(0);
+            API.SetRandomVehicleDensityMultiplierThisFrame(0);
+            API.SetParkedVehicleDensityMultiplierThisFrame(0);
+            API.SetScenarioPedDensityMultiplierThisFrame(0, 0);
+            API.RemoveVehiclesFromGeneratorsInArea(PlayerPosition.X - 500, PlayerPosition.Y - 500, PlayerPosition.Z - 500, PlayerPosition.X + 500, PlayerPosition.Y + 500, PlayerPosition.Z + 500, 0);
+            API.SetGarbageTrucks(false);
+            API.SetRandomBoats(false);
 
             // Disable the HUD if is required
             if (DisableHud)
