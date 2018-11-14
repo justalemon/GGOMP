@@ -31,7 +31,7 @@ namespace GGO.Client
             Tick += OnTickDisableNPCs;
             EventHandlers.Add("onClientGameTypeStart", new Action(OnClientGameTypeStart));
             EventHandlers.Add("playerSpawned", new Action<ExpandoObject, Vector3>(OnPlayerSpawn));
-            EventHandlers.Add("onMatchStart", new Action<bool, string>(OnMatchStart));
+            EventHandlers.Add("ggo:onPlayerNotification", new Action<string>(OnPlayerNotification));
             EventHandlers.Add("onPlayerMatchStart", new Action<Player, Vector3, float>(OnPlayerMatchStart));
 
             // Set up our menus
@@ -132,13 +132,9 @@ namespace GGO.Client
             API.SwitchInPlayer(LocalPlayer.Character.GetHashCode());
         }
 
-        private void OnMatchStart(bool Started, string Reason)
+        private void OnPlayerNotification(string Reason)
         {
-            // If the match has not started, show a noficiation
-            if (!Started)
-            {
-                Messages.Phone("CHAR_FRANK_TREV_CONF", Reason);
-            }
+            Messages.Phone("CHAR_FRANK_TREV_CONF", Reason);
         }
 
         private void OnPlayerMatchStart(Player Spawned, Vector3 Location, float Heading)

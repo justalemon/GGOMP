@@ -75,7 +75,7 @@ namespace GGO.Server
             // And notify all of the players
             foreach (Player NotifyTo in new PlayerList())
             {
-                TriggerClientEvent(NotifyTo, "onMatchStart", false, Message);
+                TriggerClientEvent(NotifyTo, "ggo:onPlayerNotification", Message);
             }
         }
 
