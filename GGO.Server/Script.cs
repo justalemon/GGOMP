@@ -29,8 +29,8 @@ namespace GGO.Server
             int PlayerCount = API.GetNumPlayerIndices();
             int MinimumPlayers = API.GetConvarInt("ggo_minplayers", 1);
             
-            // If the player count is higher or equal to the minimum and the current status is not "enough players"
-            if (PlayerCount >= MinimumPlayers && Status != GameStatus.EnoughPlayers)
+            // If the player count is higher or equal to the minimum and the current status is "waiting for players"
+            if (PlayerCount >= MinimumPlayers && Status == GameStatus.WaitingForPlayers)
             {
                 // Store the log message
                 string Message = string.Format(Resources.MatchEnoughPlayers, API.GetConvarInt("ggo_gamestart", 1));
@@ -41,7 +41,7 @@ namespace GGO.Server
                 // And notify all of the players
                 NotifyPlayers(Message, false);
             }
-            // If the player count is lower than the required one and the current status is "enough players"
+            // If the player count is lower than the required one
             else if (PlayerCount < MinimumPlayers)
             {
                 // Store the log message
@@ -59,7 +59,9 @@ namespace GGO.Server
                 // Write a note into the server console
                 Debug.WriteLine(Resources.MatchStartingUp.Replace("~n~", " "));
                 // Store the status on a variable
-                Status = GameStatus.WaitingForPlayers;
+                Status = GameStatus.GameRunning;
+                // Run all of the shit that we need
+                StartMatch();
                 // And notify all of the players
                 NotifyPlayers(Resources.MatchStartingUp);
             }
@@ -75,6 +77,11 @@ namespace GGO.Server
             {
                 TriggerClientEvent(NotifyTo, "onMatchStart", false, Message);
             }
+        }
+
+        public void StartMatch()
+        {
+
         }
     }
 }
