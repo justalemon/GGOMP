@@ -50,7 +50,7 @@ namespace GGO.Client
             Main.Pool.ProcessMenus();
 
             // Open our menu if the Z key is pressed
-            if (Game.IsControlJustReleased(1, Control.CharacterWheel))
+            if (Game.IsControlJustReleased(1, Control.MultiplayerInfo))
             {
                 Main.Menu.Visible = !Main.Menu.Visible;
             }
