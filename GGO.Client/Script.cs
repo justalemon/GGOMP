@@ -118,6 +118,13 @@ namespace GGO.Client
 
         private void OnPlayerSpawn(ExpandoObject Spawned, Vector3 Where)
         {
+            // If the player is not in a game, trigger a server event
+            // TODO: This raises a System.NullReferenceException during runtime, try to get it fixed
+            if (!OnMatch)
+            {
+                // TriggerServerEvent("ggo:onPlayerSpawnHUB", LocalPlayer);
+            }
+
             // If the player is the GTA Online Male model, set some of the player visuals
             if (LocalPlayer.Character.Model == new Model("mp_m_freemode_01"))
             {

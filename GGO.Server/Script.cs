@@ -2,6 +2,8 @@
 using CitizenFX.Core.Native;
 using GGO.Shared;
 using GGO.Shared.Properties;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GGO.Server
@@ -12,11 +14,17 @@ namespace GGO.Server
         /// The current game status.
         /// </summary>
         public static GameStatus Status = GameStatus.WaitingForPlayers;
+        /// <summary>
+        /// The list of players ready.
+        /// </summary>
+        public static Player[] Ready = new Player[] { };
 
         public ScriptServer()
         {
             // Register our events, all of them
             Tick += OnTickCheckStart;
+            EventHandlers.Add("ggo:onPlayerSpawnHUB", new Action<Player>(OnPlayerSpawnHUB));
+            EventHandlers.Add("playerDropped", new Action<string, Player>(OnPlayerDropped));
         }
 
         private async Task OnTickCheckStart()
@@ -26,11 +34,10 @@ namespace GGO.Server
 
             // Create a list of players and store the player count and minimum for the game
             PlayerList Players = new PlayerList();
-            int PlayerCount = API.GetNumPlayerIndices();
             int MinimumPlayers = API.GetConvarInt("ggo_minplayers", 1);
             
             // If the player count is higher or equal to the minimum and the current status is "waiting for players"
-            if (PlayerCount >= MinimumPlayers && Status == GameStatus.WaitingForPlayers)
+            if (Ready.Length >= MinimumPlayers && Status == GameStatus.WaitingForPlayers)
             {
                 // Store the log message
                 string Message = string.Format(Resources.MatchEnoughPlayers, API.GetConvarInt("ggo_gamestart", 1));
@@ -42,10 +49,10 @@ namespace GGO.Server
                 NotifyPlayers(Message, false);
             }
             // If the player count is lower than the required one
-            else if (PlayerCount < MinimumPlayers)
+            else if (Ready.Length < MinimumPlayers)
             {
                 // Store the log message
-                string Message = string.Format(Resources.MatchNotEnoughPlayers, MinimumPlayers - PlayerCount, API.GetConvarInt("ggo_gamestart", 1));
+                string Message = string.Format(Resources.MatchNotEnoughPlayers, MinimumPlayers - Ready.Length, API.GetConvarInt("ggo_gamestart", 1));
                 // Write a note into the server console
                 Debug.WriteLine(Message.Replace("~n~", " "));
                 // Store the status on a variable
@@ -68,6 +75,21 @@ namespace GGO.Server
 
             // Try again in the specified number of minutes (default: 1)
             await Delay(API.GetConvarInt("ggo_gamestart", 1) * 60 * 1000);
+        }
+
+        private void OnPlayerSpawnHUB(Player PlayerSpawned)
+        {
+            // Add the player on the ready array
+            Ready[Ready.Length] = PlayerSpawned;
+        }
+
+        private void OnPlayerDropped(string Reason, Player PlayerDropped)
+        {
+            // Remove the player from the ready array if is there
+            if (Ready.Contains(PlayerDropped))
+            {
+                Ready = Ready.Where((Source, Index) => Source != PlayerDropped).ToArray();
+            }
         }
 
         public void NotifyPlayers(string Message, bool Started = false)
