@@ -33,7 +33,6 @@ namespace GGO.Server
             int WaitTime = API.GetConvarInt("ggo_gamestart", 1);
 
             // Create a list of players and store the player count and minimum for the game
-            PlayerList Players = new PlayerList();
             int MinimumPlayers = API.GetConvarInt("ggo_minplayers", 1);
             
             // If the player count is higher or equal to the minimum and the current status is "waiting for players"
@@ -94,11 +93,8 @@ namespace GGO.Server
 
         public void NotifyPlayers(string Message, bool Started = false)
         {
-            // And notify all of the players
-            foreach (Player NotifyTo in new PlayerList())
-            {
-                TriggerClientEvent(NotifyTo, "ggo:onPlayerNotification", Message);
-            }
+            // Notify all of the players
+            TriggerClientEvent("ggo:onPlayerNotification", Message);
         }
 
         public void StartMatch()
