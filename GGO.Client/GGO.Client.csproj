@@ -54,13 +54,13 @@
     <Compile Include="Script.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\NativeUI\NativeUI\NativeUI.csproj">
+      <Project>{f3e16ed9-dbf7-4e7b-b04b-9b24b11891d3}</Project>
+      <Name>NativeUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GGO.Shared\GGO.Shared.csproj">
       <Project>{5ca88cd9-86da-471b-8234-83270cb91786}</Project>
       <Name>GGO.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NativeUI\NativeUI.csproj">
-      <Project>{f3e16ed9-dbf7-4e7b-b04b-9b24b11891d3}</Project>
-      <Name>NativeUI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
