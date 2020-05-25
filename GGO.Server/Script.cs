@@ -1,7 +1,6 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using GGO.Shared;
-using GGO.Shared.Properties;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -39,7 +38,7 @@ namespace GGO.Server
             if (Ready.Count >= MinimumPlayers && Status == GameStatus.WaitingForPlayers)
             {
                 // Store the log message
-                string Message = string.Format(Resources.MatchEnoughPlayers, API.GetConvarInt("ggo_gamestart", 1));
+                string Message = string.Format("", API.GetConvarInt("ggo_gamestart", 1));
                 // Write a note into the server console
                 Debug.WriteLine(Message.Replace("~n~", " "));
                 // Store the status on a variable
@@ -51,7 +50,7 @@ namespace GGO.Server
             else if (Ready.Count < MinimumPlayers)
             {
                 // Store the log message
-                string Message = string.Format(Resources.MatchNotEnoughPlayers, MinimumPlayers - Ready.Count, API.GetConvarInt("ggo_gamestart", 1));
+                string Message = string.Format("", MinimumPlayers - Ready.Count, API.GetConvarInt("ggo_gamestart", 1));
                 // Write a note into the server console
                 Debug.WriteLine(Message.Replace("~n~", " "));
                 // Store the status on a variable
@@ -63,13 +62,13 @@ namespace GGO.Server
             else if (Status == GameStatus.EnoughPlayers)
             {
                 // Write a note into the server console
-                Debug.WriteLine(Resources.MatchStartingUp.Replace("~n~", " "));
+                Debug.WriteLine("".Replace("~n~", " "));
                 // Store the status on a variable
                 Status = GameStatus.GameRunning;
                 // Run all of the shit that we need
                 StartMatch();
                 // And notify all of the players
-                NotifyPlayers(Resources.MatchStartingUp);
+                NotifyPlayers("");
             }
 
             // Try again in the specified number of minutes (default: 1)
