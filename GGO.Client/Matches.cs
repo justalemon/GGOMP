@@ -21,11 +21,10 @@ namespace GGO.Client
 
         #region Public Properties
 
-
         /// <summary>
         /// If the Local Player is on a match.
         /// </summary>
-        public static bool OnMatch { get; set; } = false;
+        public static bool OnMatch { get; private set; } = false;
 
         #endregion
 
@@ -44,12 +43,18 @@ namespace GGO.Client
         /// Event triggered when the gamemode starts on the client.
         /// </summary>
         [EventHandler("onClientGameTypeStart")]
-        public void OnClientGameTypeStart(string name)
+        public async void OnClientGameTypeStart(string name)
         {
-            // Place the screen black
-            API.DoScreenFadeOut(0);
-            // Start by disabling the clouds
+            // This is no longer useable, but I'm gonna leave it just in case
+            API.SetManualShutdownLoadingScreenNui(true);
+            // And disable the clouds
             API.SetCloudHatOpacity(0);
+
+            // Always start by loading North Yankton first
+            foreach (string IPL in Data.NorthYanktonIPLs)
+            {
+                API.RequestIpl(IPL);
+            }
 
             // If there are no player switches active, start it
             if (!API.IsPlayerSwitchInProgress())
@@ -57,24 +62,19 @@ namespace GGO.Client
                 API.SwitchOutPlayer(Game.Player.Character.Handle, 1, 1);
             }
 
-            // This is no longer useable, but I'm gonna leave it just in case
-            API.SetManualShutdownLoadingScreenNui(true);
+            // Wait until the switch level is 5
+            while (API.GetPlayerSwitchState() != 5)
+            {
+                await Delay(0);
+            }
 
-            // Remove the black screen
-            API.DoScreenFadeIn(0);
-            // And unload the loading screen
+            // Once NY is loaded, hide the loading screen
             API.ShutdownLoadingScreen();
             API.ShutdownLoadingScreenNui();
 
-            // Load North Yankton
-            foreach (string IPL in Data.NorthYanktonIPLs)
-            {
-                API.RequestIpl(IPL);
-            }
-
             // And spawn the player in one of the HUB locations
             Location SpawnLocation = Data.HubSpawns[random.Next(Data.HubSpawns.Length)];
-            Exports["spawnmanager"].spawnPlayer(new { x = SpawnLocation.X, y = SpawnLocation.Y, z = SpawnLocation.Z, heading = SpawnLocation.R, model = "mp_m_freemode_01" });
+            Exports["spawnmanager"].spawnPlayer(new { x = SpawnLocation.X, y = SpawnLocation.Y, z = SpawnLocation.Z, heading = SpawnLocation.R, model = "mp_m_freemode_01", skipFade = true });
             Exports["spawnmanager"].forceRespawn();
         }
 
