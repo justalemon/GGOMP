@@ -37,11 +37,6 @@ namespace GGO.Client
             // Set up our menus
             Main.SetUp();
             Main.Pool.RefreshIndex();
-
-            // Set the Discord ID to "GGO for FiveM", use the white icon and add a message that the player is waiting
-            API.SetDiscordAppId("509408274357944341");
-            API.SetDiscordRichPresenceAsset("ggo_white"); // There is also ggo_black, but Elope said that white looks better
-            API.SetRichPresence("Waiting for a Match on the HUB...");
         }
 
         private async Task OnTickMenu()
