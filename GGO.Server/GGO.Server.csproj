@@ -23,6 +23,9 @@
     <None Update="fxmanifest.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="stream\*.ytd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Compile Include="../Convars.cs" />
     <ProjectReference Include="..\GGO.Shared\GGO.Shared.csproj" />
   </ItemGroup>
