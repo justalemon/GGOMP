@@ -58,5 +58,18 @@ namespace GGO.Client
         }
 
         #endregion
+
+        #region Network Events
+
+        /// <summary>
+        /// Shows a notification on the player screen.
+        /// </summary>
+        [EventHandler("ggo:onPlayerNotification")]
+        public void OnPlayerNotification(string message)
+        {
+            Messages.Phone("CHAR_FRANK_TREV_CONF", message);
+        }
+
+        #endregion
     }
 }
