@@ -49,6 +49,12 @@ namespace GGO.Client
             API.RemoveVehiclesFromGeneratorsInArea(position.X - 500, position.Y - 500, position.Z - 500, position.X + 500, position.Y + 500, position.Z + 500, 0);
             API.SetGarbageTrucks(false);
             API.SetRandomBoats(false);
+            API.SetPoliceIgnorePlayer(Game.Player.Handle, true);
+            API.SetMaxWantedLevel(0);
+            for (int i = 0; i < 16; i++)
+            {
+                API.EnableDispatchService(i, false);
+            }
         }
 
         #endregion
