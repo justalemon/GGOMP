@@ -27,8 +27,6 @@ namespace GGO.Client
         {
             // Add our tick function8 and our events for when the client-side starts and when the player has spawned
             Tick += OnTickMenu;
-            Tick += OnTickHud;
-            Tick += OnTickDisableNPCs;
             EventHandlers.Add("onClientGameTypeStart", new Action(OnClientGameTypeStart));
             EventHandlers.Add("playerSpawned", new Action<ExpandoObject, Vector3>(OnPlayerSpawn));
             EventHandlers.Add("ggo:onPlayerNotification", new Action<string>(OnPlayerNotification));
@@ -49,29 +47,6 @@ namespace GGO.Client
             {
                 Main.Menu.Visible = !Main.Menu.Visible;
             }
-        }
-
-        private async Task OnTickHud()
-        {
-            // Disable the HUD if is required
-            if (DisableHud)
-            {
-                API.HideHudAndRadarThisFrame();
-            }
-        }
-
-        private async Task OnTickDisableNPCs()
-        {
-            // Disable traffic and peds to make somewhat of a ghost town
-            Vector3 PlayerPosition = LocalPlayer.Character.Position;
-            API.SetVehicleDensityMultiplierThisFrame(0);
-            API.SetPedDensityMultiplierThisFrame(0);
-            API.SetRandomVehicleDensityMultiplierThisFrame(0);
-            API.SetParkedVehicleDensityMultiplierThisFrame(0);
-            API.SetScenarioPedDensityMultiplierThisFrame(0, 0);
-            API.RemoveVehiclesFromGeneratorsInArea(PlayerPosition.X - 500, PlayerPosition.Y - 500, PlayerPosition.Z - 500, PlayerPosition.X + 500, PlayerPosition.Y + 500, PlayerPosition.Z + 500, 0);
-            API.SetGarbageTrucks(false);
-            API.SetRandomBoats(false);
         }
 
         private void OnClientGameTypeStart()
@@ -122,11 +97,11 @@ namespace GGO.Client
             // If the player is the GTA Online Male model, set some of the player visuals
             if (LocalPlayer.Character.Model == new Model("mp_m_freemode_01"))
             {
-                API.SetPedComponentVariation(LocalPlayer.Character.GetHashCode(), 0, 0, 0, 2);  // Face
-                API.SetPedComponentVariation(LocalPlayer.Character.GetHashCode(), 2, 11, 4, 2); // Hair
-                API.SetPedComponentVariation(LocalPlayer.Character.GetHashCode(), 4, 1, 5, 2);  // Pants
-                API.SetPedComponentVariation(LocalPlayer.Character.GetHashCode(), 6, 1, 0, 2);  // Shoes
-                API.SetPedComponentVariation(LocalPlayer.Character.GetHashCode(), 11, 7, 2, 2); // Jacket
+                API.SetPedComponentVariation(Game.Player.Character.Handle, 0, 0, 0, 2);  // Face
+                API.SetPedComponentVariation(Game.Player.Character.Handle, 2, 11, 4, 2); // Hair
+                API.SetPedComponentVariation(Game.Player.Character.Handle, 4, 1, 5, 2);  // Pants
+                API.SetPedComponentVariation(Game.Player.Character.Handle, 6, 1, 0, 2);  // Shoes
+                API.SetPedComponentVariation(Game.Player.Character.Handle, 11, 7, 2, 2); // Jacket
             }
 
             // And return to the player control
